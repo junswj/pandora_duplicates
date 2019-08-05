@@ -666,51 +666,7 @@ df[['name','duplicated']]
       <td>Fly Me To The Moon</td>
       <td>True</td>
     </tr>
-    <tr>
-      <th>12</th>
-      <td>Man In The Mirror</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>Man In The Mirror</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>Faithfully</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>Faithfully</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>Faithfully</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>Faithfully</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>Faithfully</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>Fly Me To The Moon</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>Man In The Mirror</td>
-      <td>True</td>
-    </tr>
+
   </tbody>
 </table>
 </div>
