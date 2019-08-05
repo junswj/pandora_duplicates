@@ -100,7 +100,7 @@ dic.keys()
 
 
 
-Our plans is to make two DataFrame for each keys in the dictionary and merging it at the end:
+Our plans is to create two DataFrame, for each key in the dictionary, and merging it at the end:
 
 
 ```python
