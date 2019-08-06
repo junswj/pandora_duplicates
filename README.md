@@ -3,7 +3,7 @@
 
 I am big fan of Pandora Radio, and I love their automated music recommendations, which is powered by the Music Genome Project. Only thing they are missing is removing the duplicated songs in the playlist, and I wanted to share the method how I do it.
 
-<img src=./static/Picture1.png>
+<img src=./static/pweb.png>
 
 # Importing Libraries and Functions:
 *Following packages and functions are used in this work:*
@@ -686,5 +686,43 @@ df[['name','duplicated']]
 
 
 ```python
+def dupli_check(url):
+    '''
+    Input
+    URL(Sting): Pandora Playlist URL 
 
+    Output
+    df_numbers(DataFrame): Number of duplicate songs in playlist
+    df_loc(DataFrame): Location of duplicate songs in playlist
+    '''
+    #equest playlist information by using ‘requests’ and parse with 'BeautifulSoup'
+    r=requests.get(url)
+    soup=BeautifulSoup(r.content,"html")
+    page_str=str(soup)
+    json_dict=page_str.split('var ')[4].replace(';\n    ','').replace('storeData = ','')
+    
+    #Convert this information to Dictionary using Json
+    dic=json.loads(json_dict)
+    
+    #This dictionary contains two keys:
+    #['v4/catalog/annotateObjects', 'v7/playlists/getTracks']
+    #Our plans is to create two DataFrame, for each key in the dictionary, and merging it at the end:
+    df_tracks=pd.DataFrame(dic['v7/playlists/getTracks'][0]['tracks'])
+
+    #Each song is displayed as a 'trackPandoraId', so we need to pull song information from the other part of dictionary, annotateObjects.
+    df_info=pd.DataFrame.from_dict(dic['v4/catalog/annotateObjects'][0], orient='index')
+    df_info=df_info.reset_index()
+    df_info.rename(columns={'index':'trackPandoraId'}, inplace=True)
+    
+    #Now we have all the information we needed. Let’s merge these DataFrames:
+    df=df_tracks.merge(df_info, left_on='trackPandoraId', right_on='trackPandoraId').sort_values(by=['itemId'])
+
+    #Simply, use groupby function to display how many duplicates are in this playlist:
+    df_numbers=df[['name','artistName','itemId']].groupby(['name','artistName']).count().sort_values(by='itemId', ascending=False)
+
+    #Use duplicated function to see where the duplicate songs are located in the playlist:
+    df['duplicated']=df.duplicated(subset='name')
+    df_loc=df[['name','duplicated']]
+    
+    return df_numbers, df_loc
 ```

@@ -19,6 +19,14 @@ def index():
 
 
 def dupli_check(url):
+    '''
+    Input
+    URL(Sting): Pandora Playlist URL 
+
+    Output
+    df_numbers(DataFrame): Number of duplicate songs in playlist
+    df_loc(DataFrame): Location of duplicate songs in playlist
+    '''
     #equest playlist information by using ‘requests’ and parse with 'BeautifulSoup'
     r=requests.get(url)
     soup=BeautifulSoup(r.content,"html")
