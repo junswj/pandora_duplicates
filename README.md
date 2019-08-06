@@ -51,7 +51,18 @@ print(soup)
 
         ...
 
+All the data you need is included in 'var storeData =', which is dictionary form. Let's extract this:
 
+```python
+page_str=str(soup)
+json_dict=page_str.split('var ')[4].replace(';\n    ','').replace('storeData = ','')
+```
+    {"v4/catalog/annotateObjects":
+      [{"TR:11...":{"name":"Candle In The Wind (Remastered)",
+      "sortableName":"Candle In The Wind (Remastered)","duration":229,
+      "trackNumber":9,"volumeNumber":1,...}]
+
+    ...
 
 Convert this information to Dictionary using Json:
 

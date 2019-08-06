@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" href="../static/format.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+<body>
+    <div class="meta">
+        <div id="meta_head">
+            <br>
+            <h2>Pandora Duplicate Song Checker</h2>
+        </div>
+        <h2>  </h2>
+        <p>Original Playlist: <a href="{{  posturl  }}">{{  posturl  }}</a></p>
+        <h3> Number of Duplicate Songs in Playlist </h3>
+        <div class="container">
+            <table id=table_info>
+                {% for table in df_numbers %}
+                    {{ table|safe }}
+                {% endfor %}
+            </table>
+         
+        </div> 
+        <br>
+     
+        <h3> Location of Duplicate Songs in Playlist </h3>
+        <div class="container">
+            <table id=table_info>
+                {% for table in df_loc %}
+                    {{ table|safe }}
+                {% endfor %}
+            </table>
+        </div>
+    </div>  
+    
+</body>
+</html>
