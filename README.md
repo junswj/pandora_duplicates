@@ -600,7 +600,7 @@ df[['name','artistName','itemId']].groupby(['name','artistName']).count().sort_v
 
 
 
-Use __*duplicated*__ function to see where the duplicate songs are located in the playlist:
+Use __*duplicated*__ function to see where the duplicate songs are located in the playlist ('True' means duplicate):
 
 
 ```python
@@ -684,7 +684,7 @@ df[['name','duplicated']]
 
 
 
-
+Entire code of function is shown below:
 ```python
 def dupli_check(url):
     '''
