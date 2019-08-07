@@ -727,3 +727,5 @@ def dupli_check(url):
     
     return df_numbers, df_loc
 ```
+
+![](static/pandora_dup_demo.gif)
