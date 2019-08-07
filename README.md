@@ -1,7 +1,9 @@
 
 # How to find duplicate songs in Pandora playlist: Pandas and Dictionary
 
-I am big fan of Pandora Radio, and I love their automated music recommendations, which is powered by the Music Genome Project. Only thing they are missing is removing the duplicated songs in the playlist, and I wanted to share the method how I do it.
+I am a big fan of [Pandora Radio](https://www.pandora.com/), and I love their automated music recommendations, which is powered by the [Music Genome Project](https://en.wikipedia.org/wiki/Music_Genome_Project). Only thing they are missing is removing the duplicated songs in the playlist, and I wanted to share the method how I do it. I also deployed this function to web app.  All you need to do is just copy and paste the playlist URL to this website for checking the duplicates.
+
+__*Web App link:*__ [Pandora Duplicate Song Checker](http://35.173.84.149:8080/)
 
 <img src=./static/pweb.png>
 
@@ -728,4 +730,10 @@ def dupli_check(url):
     return df_numbers, df_loc
 ```
 
-![](static/pandora_dup_demo.gif)
+All the functions mentioned above is deployed to the web app.  All you need to do is just copy and paste the playlist URL to this website for checking the duplicates. Enjoy!
+
+<p align="center">
+<img src='static/pandora_dup_demo.gif')
+</p>
+
+__*Web App link:*__ [Pandora Duplicate Song Checker](http://35.173.84.149:8080/)
