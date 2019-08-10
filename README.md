@@ -27,7 +27,7 @@ First, request playlist information by using ‘requests’ and parse with 'Beau
 
 
 ```python
-url=input("Input Pandora Playlist URL: ")
+url = input("Input Pandora Playlist URL: ")
 ```
 
     Input Pandora Playlist URL: https://www.pandora.com/playlist/PL:...
@@ -35,8 +35,8 @@ url=input("Input Pandora Playlist URL: ")
 
 
 ```python
-r=requests.get(url)
-soup=BeautifulSoup(r.content,"html")
+r = requests.get(url)
+soup = BeautifulSoup(r.content,"html")
 print(soup)
 ```
 
@@ -56,8 +56,8 @@ print(soup)
 All the data you need is included in 'var storeData =', which is dictionary form. Let's extract this:
 
 ```python
-page_str=str(soup)
-json_dict=page_str.split('var ')[4].replace(';\n    ','').replace('storeData = ','')
+page_str = str(soup)
+json_dict = page_str.split('var ')[4].replace(';\n    ','').replace('storeData = ','')
 ```
     {"v4/catalog/annotateObjects":
       [{"TR:11...":{"name":"Candle In The Wind (Remastered)",
@@ -82,7 +82,7 @@ type(json_dict)
 
 
 ```python
-dic=json.loads(json_dict)
+dic = json.loads(json_dict)
 ```
 
 
@@ -117,7 +117,7 @@ Our plans is to create two DataFrame, for each key in the dictionary, and mergin
 
 
 ```python
-df_tracks=pd.DataFrame(dic['v7/playlists/getTracks'][0]['tracks'])
+df_tracks = pd.DataFrame(dic['v7/playlists/getTracks'][0]['tracks'])
 df_tracks.head()
 ```
 
@@ -182,8 +182,8 @@ Each song is displayed as a 'trackPandoraId', so we need to pull song informatio
 
 
 ```python
-df_info=pd.DataFrame.from_dict(dic['v4/catalog/annotateObjects'][0], orient='index')
-df_info=df_info.reset_index()
+df_info = pd.DataFrame.from_dict(dic['v4/catalog/annotateObjects'][0], orient='index')
+df_info = df_info.reset_index()
 df_info.rename(columns={'index':'trackPandoraId'}, inplace=True)
 ```
 
@@ -356,7 +356,7 @@ Now we have all the information we needed. Let’s merge these DataFrames:
 
 
 ```python
-df=df_tracks.merge(df_info, left_on='trackPandoraId', right_on='trackPandoraId').sort_values(by=['itemId'])
+df = df_tracks.merge(df_info, left_on='trackPandoraId', right_on='trackPandoraId').sort_values(by=['itemId'])
 df.head()
 ```
 
@@ -606,7 +606,7 @@ Use __*duplicated*__ function to see where the duplicate songs are located in th
 
 
 ```python
-df['duplicated']=df.duplicated(subset='name')
+df['duplicated'] = df.duplicated(subset='name')
 df[['name','duplicated']]
 ```
 
@@ -699,32 +699,32 @@ def dupli_check(url):
     '''
 
     #request playlist information by using ‘requests’ and parse with 'BeautifulSoup'
-    r=requests.get(url)
-    soup=BeautifulSoup(r.content,"html")
-    page_str=str(soup)
-    json_dict=page_str.split('var ')[4].replace(';\n    ','').replace('storeData = ','')
+    r = requests.get(url)
+    soup = BeautifulSoup(r.content,"html")
+    page_str = str(soup)
+    json_dict = page_str.split('var ')[4].replace(';\n    ','').replace('storeData = ','')
     
     #Convert this information to Dictionary using Json
-    dic=json.loads(json_dict)
+    dic = json.loads(json_dict)
     
     #This dictionary contains two keys:
     #['v4/catalog/annotateObjects', 'v7/playlists/getTracks']
     #Our plans is to create two DataFrame, for each key in the dictionary, and merging it at the end:
-    df_tracks=pd.DataFrame(dic['v7/playlists/getTracks'][0]['tracks'])
+    df_tracks = pd.DataFrame(dic['v7/playlists/getTracks'][0]['tracks'])
 
     #Each song is displayed as a 'trackPandoraId', so we need to pull song information from the other part of dictionary, annotateObjects.
-    df_info=pd.DataFrame.from_dict(dic['v4/catalog/annotateObjects'][0], orient='index')
-    df_info=df_info.reset_index()
+    df_info = pd.DataFrame.from_dict(dic['v4/catalog/annotateObjects'][0], orient='index')
+    df_info = df_info.reset_index()
     df_info.rename(columns={'index':'trackPandoraId'}, inplace=True)
     
     #Now we have all the information we needed. Let’s merge these DataFrames:
-    df=df_tracks.merge(df_info, left_on='trackPandoraId', right_on='trackPandoraId').sort_values(by=['itemId'])
+    df = df_tracks.merge(df_info, left_on='trackPandoraId', right_on='trackPandoraId').sort_values(by=['itemId'])
 
     #Simply, use groupby function to display how many duplicates are in this playlist:
-    df_numbers=df[['name','artistName','itemId']].groupby(['name','artistName']).count().sort_values(by='itemId', ascending=False)
+    df_numbers = df[['name','artistName','itemId']].groupby(['name','artistName']).count().sort_values(by='itemId', ascending=False)
 
     #Use duplicated function to see where the duplicate songs are located in the playlist:
-    df['duplicated']=df.duplicated(subset='name')
+    df['duplicated'] = df.duplicated(subset='name')
     df_loc=df[['name','duplicated']]
     
     return df_numbers, df_loc
